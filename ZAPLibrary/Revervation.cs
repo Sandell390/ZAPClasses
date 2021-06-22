@@ -97,24 +97,6 @@ namespace ZAPClasses
         //Calculates the price of it.
         public double CalulatePrice(Dal dal)
         {
-            //checks for discount offer.
-            if (this.additions.Count != 0)
-            {
-                DateTime date = this.startDate;
-                date = date.AddDays(7);
-                int Discount = 0;
-                for (int i = 0; i < this.additions.Count; i++)
-                {
-                    if ((this.additions[i].Type == ZAPClasses.Additions.AdditionType.BreakfastA && this.additions[i].Amount == 4) || (this.additions[i].Type == ZAPClasses.Additions.AdditionType.WaterlandA && this.additions[i].Amount == 4))
-                    {
-                        Discount++;
-                    }
-                }
-                if (Discount == 2 && (date.Day == this.endDate.Day && date.Month == this.endDate.Month && date.Year == this.endDate.Year))
-                {
-                    return 1099;
-                }
-            }
             //if its has a season it will set the price for season price.
             if (this.seasonType != Season.None)
             {
@@ -136,7 +118,6 @@ namespace ZAPClasses
             {
                 //Result is the calculatet price variable
                 double result = 0;
-                bool Camp = this.type == CampType.BigCamp || this.type == CampType.BigCampWater;
 
                 //connecting to database and gets the price scheme of the type.
                 using (SqlConnection connection = new SqlConnection(dal.ConnString))
@@ -149,11 +130,9 @@ namespace ZAPClasses
                     //Reading the Data we got from the database
                     while (reader.Read())
                     {
-                        int dayAdder = 0;
                         DateTime date = this.startDate;
                         do
                         {
-
                             date = date.AddDays(1);
                             int readerOption = 2;
 
@@ -175,34 +154,18 @@ namespace ZAPClasses
                                     result += ((int)reader[readerOption] * this.dog);
                                     break;
                                 case "CampFee":
-                                    if (Camp)
-                                    {
-                                        dayAdder++;
-                                    }
-
-                                    if (dayAdder != 4)
-                                    {
-                                        result += (int)reader[readerOption];
-                                    }
+                                    result += (int)reader[readerOption];
 
                                     //adds the additions
                                     if (this.additions.Count != 0)
                                     {
                                         for (int i = 0; i < this.additions.Count; i++)
                                         {
-                                            if ((this.additions[i].Type == ZAPClasses.Additions.AdditionType.endClean) && !(date.Day == this.endDate.Day && date.Month == this.endDate.Month && date.Year == this.endDate.Year))
-                                            {
-                                                result += this.additions[i].getPrice();
-                                            }
-                                            else
-                                            {
-                                                result += this.additions[i].getPrice();
-                                            }
+                                            result += this.additions[i].getPrice();
                                         }
                                     }
                                     break;
                             }
-                            //if the date match the end date its stops
                         } while (!(date.Day == this.endDate.Day && date.Month == this.endDate.Month && date.Year == this.endDate.Year));
                     }
                 }
