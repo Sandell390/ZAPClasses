@@ -6,6 +6,15 @@ namespace ZAPClasses
 {
     public class Revervation
     {
+        private CampSpot camp;
+
+        public CampSpot Camp
+        {
+            get { return camp; }
+            set { camp = value; }
+        }
+
+
         private int adult;
 
         public int Adult
@@ -101,8 +110,6 @@ namespace ZAPClasses
             Summer,
             Autumn
         }
-
-
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using System.Data.SqlClient;
 
@@ -47,7 +48,11 @@ namespace ZAPClasses
             }
         }
 
-
+        /// <summary>
+        /// Gets all CampSpots of a type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public List<CampSpot> GetCampSpotsOfType(Revervation.CampType type)
         {
             List<CampSpot> allCampSpots = new List<CampSpot>();
@@ -55,7 +60,6 @@ namespace ZAPClasses
             try
             {
                 
-
                 using (SqlConnection connection = new SqlConnection(connString))
                 {
                     connection.Open();
@@ -65,9 +69,7 @@ namespace ZAPClasses
                     cmd.Parameters.Add(new SqlParameter("@type", type));
 
                     SqlDataReader reader = cmd.ExecuteReader();
-
-
-
+                    
                     while (reader.Read())
                     {
                         allCampSpots.Add(new CampSpot(reader[0].ToString()));
@@ -87,6 +89,12 @@ namespace ZAPClasses
             return allCampSpots;
         }
 
+        /// <summary>
+        /// Get all booked CampSpots from the database
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
         public List<CampSpot> GetBookedCampSpots(DateTime startDate, DateTime endDate)
         {
             List<CampSpot> campSpots = new List<CampSpot>();
@@ -96,25 +104,18 @@ namespace ZAPClasses
                 using (SqlConnection connection = new SqlConnection(connString))
                 {
                     connection.Open();
-                    //where StartDate <= @start and EndDate >= @end
-                    SqlCommand cmd = new SqlCommand("select campID from [Booked Camps] where StartDate <= @start and EndDate >= @end", connection);
+                    
+                    SqlCommand cmd = new SqlCommand("select campID from [Booked Camps] where (StartDate <= @start and EndDate >= @start) or (StartDate >= @start and EndDate >= @end) or (StartDate >= @start and EndDate <= @end)", connection);
 
                     cmd.Parameters.Add(new SqlParameter("@start", startDate.ToString("yyyy-MM-dd")));
                     cmd.Parameters.Add(new SqlParameter("@end", endDate.ToString("yyyy-MM-dd")));
 
-
                     SqlDataReader reader = cmd.ExecuteReader();
-
-
-
                     
-
                     while (reader.Read())
                     {
                         campSpots.Add(new CampSpot(reader[0].ToString()));
                     }
-
-
                 }
             }
             catch (Exception e)
@@ -124,6 +125,76 @@ namespace ZAPClasses
             }
 
             return campSpots;
+        }
+
+        public void InsertCustomer(Customer customer)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connString))
+                {
+                    connection.Open();
+
+                    SqlCommand cmd = new SqlCommand("[dbo].[CreateCustomer]", connection);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new SqlParameter("@Email", customer.Eamil));
+                    cmd.Parameters.Add(new SqlParameter("@FirstName", customer.FirstName));
+                    cmd.Parameters.Add(new SqlParameter("@LastName", customer.LastName));
+                    cmd.Parameters.Add(new SqlParameter("@Address", customer.Address));
+                    cmd.Parameters.Add(new SqlParameter("@PhoneNr", customer.TelefonNr));
+
+                    cmd.ExecuteNonQuery();
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public void InsertRevervation(Revervation revervation)
+        {
+            try
+            {
+
+                using (SqlConnection connection = new SqlConnection(connString))
+                {
+                    connection.Open();
+
+                    SqlCommand cmd = new SqlCommand("[dbo].[CreateReservation]", connection);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new SqlParameter("@CustomerEmail", revervation.Customer.Eamil));
+                    cmd.Parameters.Add(new SqlParameter("@Type", revervation.Type));
+                    cmd.Parameters.Add(new SqlParameter("@StartDate", revervation.StartDate.ToString("yyyy-MM-dd")));
+                    cmd.Parameters.Add(new SqlParameter("@EndDate", revervation.EndDate.ToString("yyyy-MM-dd")));
+                    cmd.Parameters.Add(new SqlParameter("@Adult", revervation.Adult));
+                    cmd.Parameters.Add(new SqlParameter("@Child", revervation.Kids));
+                    cmd.Parameters.Add(new SqlParameter("@Dog", revervation.Dog));
+                    cmd.Parameters.Add(new SqlParameter("@CampID", revervation.Camp.Id));
+
+                    cmd.Parameters["@OrderID"].Direction = ParameterDirection.Output;
+
+                    cmd.ExecuteNonQuery();
+
+                    string ID = cmd.Parameters["@OrderID"].Value.ToString();
+
+                    Console.WriteLine($"ID: {ID}");
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
     }

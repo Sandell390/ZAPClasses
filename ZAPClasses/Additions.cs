@@ -30,11 +30,8 @@ namespace ZAPClasses
             Bike,
             WaterlandA,
             WaterlandK,
-            endClean,
-            BedThing,
-            
-
-
+            EndClean,
+            BedThing
         }
 
 
