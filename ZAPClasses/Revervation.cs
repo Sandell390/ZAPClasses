@@ -26,9 +26,6 @@ namespace ZAPClasses
         }
 
 
-        private int adult;
-
-
         public int Adult { get { return adult; } set { adult = value; } }
         public int Child { get { return child; } set { child = value; } }
         public int Dog { get { return dog; } set { dog = value; } }

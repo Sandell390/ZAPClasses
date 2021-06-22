@@ -177,7 +177,7 @@ namespace ZAPClasses
                     cmd.Parameters.Add(new SqlParameter("@StartDate", revervation.StartDate.ToString("yyyy-MM-dd")));
                     cmd.Parameters.Add(new SqlParameter("@EndDate", revervation.EndDate.ToString("yyyy-MM-dd")));
                     cmd.Parameters.Add(new SqlParameter("@Adult", revervation.Adult));
-                    cmd.Parameters.Add(new SqlParameter("@Child", revervation.Kids));
+                    cmd.Parameters.Add(new SqlParameter("@Child", revervation.Child));
                     cmd.Parameters.Add(new SqlParameter("@Dog", revervation.Dog));
                     cmd.Parameters.Add(new SqlParameter("@CampID", revervation.Camp.Id));
 
