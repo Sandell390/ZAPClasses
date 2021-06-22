@@ -10,6 +10,8 @@ namespace ZAPClasses
     {
         private static string connString = @"Server=172.16.21.31;Database=zap-camp; User Id=sa;Password=Muffin123;";
 
+        public string ConnString { get { return connString; } }
+
         public Dal()
         {
             //Connect();

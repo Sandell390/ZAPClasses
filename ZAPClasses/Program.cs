@@ -8,12 +8,13 @@ namespace ZAPClasses
         {
             Console.WriteLine("Hello World!");
 
-            Dal dalmanager = new Dal();
+            Manager manager = new Manager();
 
+            manager.MakeReveration(new Revervation(DateTime.Parse("10-04-2021"), DateTime.Parse("16-04-2021")));
+            manager.Revervation.AddAdditiions(new Additions(Additions.AdditionType.BreakfastA, 1));
 
+            Console.WriteLine(manager.Revervation.CalulatePrice(manager.Dal));
             var test = dalmanager.GetCampSpotsOfType(Revervation.CampType.Tent);
-
-            var test1 = dalmanager.GetBookedCampSpots(DateTime.Parse("23-06-2021"), DateTime.Parse("26-06-2021"));
 
 
             Manager manager = new Manager();
@@ -37,6 +38,8 @@ namespace ZAPClasses
             manager.InsertCustomer();
 
             dalmanager.InsertRevervation(manager.Revervation);
+
+            var test1 = dalmanager.GetBookedCampSpots(DateTime.Parse("23-06-2021"), DateTime.Parse("26-06-2021"));
 
             Console.ReadLine();
         }

@@ -9,6 +9,8 @@ namespace ZAPClasses
         private Revervation revervation;
         private Dal dal;
 
+        public Dal Dal { get { return this.dal; } }
+
         public Manager()
         {
             dal = new Dal();
