@@ -181,6 +181,7 @@ namespace ZAPFrameLibrary
                     cmd.Parameters.Add(new SqlParameter("@Dog", revervation.Dog));
                     cmd.Parameters.Add(new SqlParameter("@CampID", revervation.Camp.Id));
                     cmd.Parameters.Add(new SqlParameter("@OrderID", 0));
+                    cmd.Parameters.Add(new SqlParameter("@Price", revervation.CalulatePrice(this)));
 
                     cmd.Parameters["@OrderID"].Direction = ParameterDirection.Output;
 
