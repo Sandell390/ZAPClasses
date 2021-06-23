@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZAPClasses", "ZAPClasses\ZAPClasses.csproj", "{D599388B-466E-4B8C-885B-792AF96A6896}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZAPLibrary", "ZAPLibrary\ZAPLibrary.csproj", "{06F630AB-94AC-4C00-B098-8C3083E73C0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZAPLibrary", "ZAPLibrary\ZAPLibrary.csproj", "{06F630AB-94AC-4C00-B098-8C3083E73C0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZAPFrameLibrary", "ZAPFrameLibrary\ZAPFrameLibrary.csproj", "{BA3D479E-8922-4AC8-9A9E-B376281C4C26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{06F630AB-94AC-4C00-B098-8C3083E73C0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06F630AB-94AC-4C00-B098-8C3083E73C0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06F630AB-94AC-4C00-B098-8C3083E73C0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA3D479E-8922-4AC8-9A9E-B376281C4C26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA3D479E-8922-4AC8-9A9E-B376281C4C26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA3D479E-8922-4AC8-9A9E-B376281C4C26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA3D479E-8922-4AC8-9A9E-B376281C4C26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
